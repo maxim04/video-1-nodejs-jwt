@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  mongodb-primary:
+    image: 'bitnami/mongodb:latest'
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=localhost
+      - MONGODB_USERNAME=user1
+      - MONGODB_PASSWORD=pass1
+      - MONGODB_DATABASE=db1
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_ROOT_PASSWORD=rootpass1
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      - MONGODB_REPLICA_SET_NAME=rs1

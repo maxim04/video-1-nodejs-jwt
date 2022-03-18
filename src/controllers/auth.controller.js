@@ -124,7 +124,7 @@ const validateRefreshToken = async (token) => {
     }
 
     const decodedToken = decodeToken();
-    const tokenExists = await models.RefreshToken.exists({_id: decodedToken.tokenId});
+    const tokenExists = await models.RefreshToken.exists({_id: decodedToken.tokenId, owner: decodedToken.userId});
     if (tokenExists) {
         return decodedToken;
     } else {

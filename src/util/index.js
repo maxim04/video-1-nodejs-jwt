@@ -3,8 +3,14 @@ const mongoose = require("mongoose");
 function errorHandler(fn) {
     return async function(req, res, next) {
         try {
-            const result = await fn(req, res);
-            res.json(result);
+            let nextCalled = false;
+            const result = await fn(req, res, (params) => {
+                nextCalled = true;
+                next(params);
+            });
+            if (!res.headersSent && !nextCalled) {
+                res.json(result);
+            }
         } catch (e) {
             next(e);
         }

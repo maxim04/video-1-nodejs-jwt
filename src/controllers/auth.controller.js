@@ -88,6 +88,12 @@ const logout = errorHandler(withTransaction(async (req, res, session) => {
     return {success: true};
 }));
 
+const logoutAll = errorHandler(withTransaction(async (req, res, session) => {
+    const refreshToken = await validateRefreshToken(req.body.refreshToken);
+    await models.RefreshToken.deleteMany({owner: refreshToken.userId}, {session});
+    return {success: true};
+}));
+
 function createAccessToken(userId) {
     return jwt.sign({
         userId: userId
@@ -137,5 +143,6 @@ module.exports = {
     login,
     newRefreshToken,
     newAccessToken,
-    logout
+    logout,
+    logoutAll
 };
